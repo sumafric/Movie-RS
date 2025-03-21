@@ -1,0 +1,138 @@
+body {
+    text-align: center;
+    background-color: #1e1e1e; /* Dark Grey Background */
+    color: #ddd; /* Light Grey Text */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Search Box */
+.search-box {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.search-box input {
+    padding: 12px;
+    width: 300px;
+    font-size: 16px;
+    border: 1px solid #aaa; /* Light Grey Border */
+    border-radius: 20px; /* Rounded Corners */
+    background: rgba(255, 255, 255, 0.2); /* Slightly more visible */
+    color: white;
+    outline: none;
+}
+
+/* Search Button */
+.search-box button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #696161, #ea2a08); /* Gradient Red */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(255, 75, 43, 0.3);
+}
+
+.search-box button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(255, 75, 43, 0.5);
+}
+
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+    background: #333;
+    border-radius: 5px;
+    max-width: 300px;
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 45px;
+    z-index: 10;
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.suggestions-list li:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Movie Grid */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 50px;
+}
+
+/* Movie Card */
+.movie-card {
+    background: #444; /* Slightly lighter grey */
+    padding: 10px;
+    border-radius: 10px;
+    position: relative; /* Needed for overlay */
+    overflow: hidden; /* Ensures overlay stays inside */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-image {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.movie-card:hover {
+    transform: scale(1.07); /* Slightly enlarges the card */
+    box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.2); /* Soft glow effect */
+}
+
+/* Gradient Overlay */
+.movie-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(201, 116, 11, 0.3), rgba(0, 0, 0, 0.6)); 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px; /* Match card */
+}
+
+.movie-card:hover::before {
+    opacity: 1; /* Show gradient on hover */
+}
+
+/* Styling for all movie info (title, year, rating) */
+.movie-info {
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+}
+
+.movie-title {
+    margin: 5px 0;
+    font-size: 17px;
+}
+
+.movie-year, .movie-rating {
+    margin: 2px 0;
+    color: #bbb;
+    font-size: 13px;
+}
