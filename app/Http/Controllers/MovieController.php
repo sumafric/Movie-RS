@@ -51,7 +51,7 @@ class MovieController extends Controller
 
         return response()->json($movie);
     }
-
+//To be fixed
     public function searchMovies(Request $request)
 {
     $query = Movie::query();
