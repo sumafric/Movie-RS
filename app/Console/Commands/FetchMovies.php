@@ -8,7 +8,7 @@ use App\Models\Movie;
 
 class FetchMovies extends Command
 {
-    protected $signature = 'movies:fetch'; // No need for a movie parameter
+    protected $signature = 'movies:fetch {query}'; // No need for a movie parameter
     protected $description = 'Fetches trending movies from OMDb API and updates the database.';
     protected OMDbService $omdbService;
 
@@ -20,28 +20,37 @@ class FetchMovies extends Command
 
     public function handle()
     {
-        // Instead of a hardcoded movie, fetch trending/popular ones
-        $popularMovies = ['Avengers', 'Batman', 'Spiderman', 'Interstellar', 'Joker'];
+        $query = $this->argument('query'); // Get user search input
 
-        foreach ($popularMovies as $title) {
-            $this->info("Fetching movies for: $title");
-            $movies = $this->omdbService->searchMovies($title);
+        if (!$query) {
+            $this->error("Please provide a search query.");
+            return;
+        }
 
-            foreach ($movies as $movie) {
-                if (!isset($movie['imdbID'], $movie['Title'])) {
-                    continue;
-                }
+        $this->info("Fetching movies for: $query");
+        $movies = $this->omdbService->searchMovies($query);
 
-                Movie::updateOrCreate(
-                    ['imdb_id' => $movie['imdbID']],
-                    [
-                        'title' => $movie['Title'],
-                        'year' => $movie['Year'] ?? null,
-                        'poster' => $movie['Poster'] ?? null,
-                        'type' => $movie['Type'] ?? 'movie',
-                    ]
-                );
+        if (!$movies) {
+            $this->error("No movies found for query: $query");
+            return;
+        }
+
+        foreach ($movies as $movie) {
+            if (!isset($movie['imdbID'], $movie['Title'])) {
+                continue;
             }
+
+            Movie::updateOrCreate(
+                ['imdb_id' => $movie['imdbID']],
+                [
+                    'title' => $movie['Title'],
+                    'overview' => $movie['Plot'] ?? null, // Full movie plot
+                    'poster_path' => $movie['Poster'] ?? null,
+                    'rating' => $movie['imdbRating'] ?? '0.0',
+                    'release_date' => $movie['Released'] ?? null,
+                    'genres' => $movie['Genre'] ?? null, // Store genre
+                ]
+            );
         }
 
         $this->info("Movies updated successfully!");
