@@ -12,6 +12,6 @@ Route::prefix('api')->group(function () {
     Route::get('/movies', [MovieController::class, 'index']);
     Route::get('/movies/search', [MovieController::class, 'searchMovies']);
     //Route::get('/movies/{title?}', [MovieController::class, 'searchMovies']);
-    //Route::get('/movies/{imdb_id}', [MovieController::class, 'show'])->name('movies.show');
+    Route::get('/movies/{imdb_id}', [MovieController::class, 'show'])->name('movies.show');
     Route::get('/recommendations', [MovieController::class, 'getRecommendations']);
 });
