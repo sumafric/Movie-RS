@@ -1,0 +1,46 @@
+# fly.toml app configuration file generated for movie-rs on 2025-03-30T00:54:03+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'movie-rs'
+primary_region = 'jnb'
+console_command = 'php artisan tinker'
+
+
+[build]
+  [build.args]
+    NODE_VERSION = '18'
+    PHP_VERSION = '8.2'
+
+[env]
+  APP_ENV = 'production'
+  APP_DEBUG = 'false'
+  APP_KEY = 'base64:H7cX+qasXry5xpu6YwYsO9uIa1g3IJRRpvmdltv9tpA='
+  APP_URL = 'https://movie-rs.fly.dev'
+  OMDB_BASE_URL="http://www.omdbapi.com/"
+  LOG_CHANNEL = 'stderr'
+  LOG_LEVEL = 'info'
+  LOG_STDERR_FORMATTER = 'Monolog\Formatter\JsonFormatter'
+  SESSION_DRIVER = 'cookie'
+  SESSION_SECURE_COOKIE = 'true'
+
+  DB_CONNECTION = 'mysql'
+  DB_HOST = 'movie-rs-mysql.internal'
+  DB_PORT = '3306'
+  DB_DATABASE = 'movie-rs'
+  DB_USERNAME = 'root'
+
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
