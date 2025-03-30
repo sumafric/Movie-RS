@@ -1,6 +1,6 @@
 # Movie-RS
 
-Movie-RS is a **movie recommendation system** built with **Laravel 12** that suggests movies based on user preferences and allows users to view movie details, trailers, and streaming availability. The system integrates the **OMDb API** for metadata and the **JustWatch API** for streaming options.
+Movie-RS is a **movie recommendation system** built with **Laravel 12** that suggests movies based on user preferences and allows users to view movie details, trailers, and streaming availability. The system integrates the **OMDb API** for metadata.
 
 ## Features
 
